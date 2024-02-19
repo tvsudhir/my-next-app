@@ -1,34 +1,33 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useQuery, gql } from '@apollo/client';
+
+import styles from './list.module.css';
 
 type Todo = {
-  id: string,
+  todoId: string,
   name: string,
   text: string,
 };
 
 export default function TodoList() {
-  const [todos, setTodos] = useState([] as Todo[]);
-
-  useEffect(() => {
-    async function fetchTodos() {
-      const result: Todo[] = await new Promise((res) => {
-        setTimeout(() => res([
-          { id: 't1', name: 'todo1', text: 'Finish react course today' },
-          { id: 't2', name: 'todo2', text: 'Check on Nodejs' },
-        ]), 1000);
-      });
-
-      setTodos(result);
+  const { loading, error, data = { listToDos: [] } } = useQuery(gql`
+    query ListToDos {
+      listToDos {
+        todoId
+        name
+        text
+      }
     }
+  `);
 
-    fetchTodos();
-  }, []); // loaded only once
+  console.log('data', data);
+  const todos = data.listToDos;
 
-  function renderTodo({ id, name, text }: Todo) {
+  function renderTodo({ todoId, name, text }: Todo) {
     return (
-      <div key={id}>
+      <div key={todoId} className={styles.singleTodo}>
         <div>{name}</div>
         <div>{text}</div>
       </div>
@@ -36,9 +35,9 @@ export default function TodoList() {
   }
 
   return (
-    <div>
-      List of Items
-      {todos.map((todo) => renderTodo(todo))}
+    <div className={styles.main}>
+      <div className={styles.title}>List of Items</div>
+      {todos.map(renderTodo)}
     </div>
   );
 }

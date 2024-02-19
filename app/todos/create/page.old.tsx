@@ -9,15 +9,15 @@ export default function CreateTodo() {
   const [name, setName] = useState('');
   const [text, setText] = useState('');
   const router = useRouter();
-  const [createTodo, { data: createdTodo, loading, error }] = useMutation(gql`
-    mutation test_createToDo($todo: ToDoCreateInput) {
-      createToDo(todo: $todo) {
-        todoId
-        name
-        text
-      }
-    }
-  `);
+  // const [createTodo, { data: createdTodo, loading, error }] = useMutation(gql`
+  //   mutation test_createToDo($todo: ToDoCreateInput) {
+  //     createToDo(todo: $todo) {
+  //       todoId
+  //       name
+  //       text
+  //     }
+  //   }
+  // `);
 
   async function submitData() {
     console.log('name, text', name, text);
@@ -29,28 +29,22 @@ export default function CreateTodo() {
     };
 
     console.log('formData', formData);
-    // const { data: { createToDo: createdToDo } } = await apolloClient.mutate({
-    //   mutation: gql`
-    //     mutation test_createToDo($todo: ToDoCreateInput) {
-    //       createToDo(todo: $todo) {
-    //         todoId
-    //         name
-    //         text
-    //       }
-    //     }  
-    //   `,
-    //   variables: { todo: formData },
-    // });
+    const { data: { createToDo: createdToDo } } = await apolloClient.mutate({
+      mutation: gql`
+        mutation test_createToDo($todo: ToDoCreateInput) {
+          createToDo(todo: $todo) {
+            todoId
+            name
+            text
+          }
+        }  
+      `,
+      variables: { todo: formData },
+    });
 
-    await createTodo({ variables: { todo: formData } });
-
-    // console.log('createdTodo', createdToDo);
+    console.log('createdTodo', createdToDo);
     router.push('/todos/list');
   }
-
-  console.log('createdTodo', createdTodo)
-  console.log('loading', loading)
-  console.log('error', error)
 
   return (
     <div>

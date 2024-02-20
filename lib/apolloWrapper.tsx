@@ -14,7 +14,13 @@ function makeClient() {
   });
 
   return new NextSSRApolloClient({
-    cache: new NextSSRInMemoryCache(),
+    cache: new NextSSRInMemoryCache({
+      typePolicies: {
+        ToDo: {
+          keyFields: ['todoId'],
+        }
+      }
+    }),
     link:
       typeof window === 'undefined'
         ? ApolloLink.from([

@@ -42,7 +42,10 @@ export default function TodoList() {
 
   return (
     <div className={styles.main}>
-      <div className={styles.title}>List of Items</div>
+      <div className={styles.title}>
+        <h4>List of ToDos</h4>
+        <Link href="/todos/create">Create</Link>
+      </div>
       {todos.map(renderTodo)}
     </div>
   );

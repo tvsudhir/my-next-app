@@ -43,6 +43,7 @@ export default function CreateToDo() {
   console.log('formState', formState);
   return (
     <form className={styles.main} onSubmit={handleSubmit(onSubmit)}>
+      <div className={styles.title}>Create ToDo</div>
       <div>Name</div>
       <input {...register('name')} />
       <div>Text</div>

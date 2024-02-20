@@ -6,7 +6,6 @@ import { useQuery, gql } from '@apollo/client';
 import ToDo from '@/components/ToDo';
 import LIST_TODOS from './listToDo.gql';
 
-
 import styles from './list.module.css';
 
 type ToDo = {
@@ -15,7 +14,7 @@ type ToDo = {
   text: string,
 };
 
-export default function TodoList() {
+function TodoList() {
   const { loading, error, refetch, data = { listToDos: [] } } = useQuery(LIST_TODOS, {
     // If we Create a new ToDo then it won't be visible.
     // We either manually update the cache in createToDo (not eligant) Or fetch fresh list on render
@@ -31,7 +30,17 @@ export default function TodoList() {
         <h4>List of ToDos</h4>
         <Link href="/todos/create">Create</Link>
       </div>
-      {todos.map((todo: ToDo) => <ToDo key={todo.todoId} refetch={refetch} {...todo} />)}
+      {
+        todos.map((todo: ToDo) => <ToDo
+          key={todo.todoId}
+          todoId={todo.todoId}
+          name={todo.name}
+          text={todo.text}
+          refetch={refetch}
+        />)
+      }
     </div>
   );
 }
+
+export default TodoList;

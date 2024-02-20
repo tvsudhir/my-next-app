@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
 import Modal from 'react-modal';
+import Link from 'next/link';
 import { useMutation } from '@apollo/client';
 
 import styles from './todo.module.css';
@@ -13,7 +13,7 @@ type Todo = {
   refetch: Function,
 };
 
-export default function ToDo({ todoId, name, text, refetch }: Todo) {
+function ToDo({ todoId, name, text, refetch }: Todo) {
   const [canDelete, setCanDelete] = useState(false);
   const [deleteTodo, { data: deleteStatus, loading, error }] = useMutation(DELETE_TODO);
 
@@ -31,9 +31,9 @@ export default function ToDo({ todoId, name, text, refetch }: Todo) {
     onModalClose();
   }
 
-  console.log('canDelete', canDelete, todoId);
-
+  console.log('canDelete', canDelete, todoId, name);
   Modal.setAppElement('body');
+
   return (
     <div className={styles.singleTodo}>
       <Link href={`/todos/update/${todoId}`}>{name}</Link>
@@ -52,3 +52,5 @@ export default function ToDo({ todoId, name, text, refetch }: Todo) {
     </div>
   );
 }
+
+export default React.memo(ToDo);

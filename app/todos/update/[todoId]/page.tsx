@@ -31,7 +31,8 @@ export default function updateTodo({ params }: PageParams) {
     }
   `, {
     variables: { todoId },
-    fetchPolicy: 'network-only'
+    // Properly normalized so we do not need it
+    // fetchPolicy: 'network-only'
   });
 
   const receivedTodo = data.getToDo ?? {};

@@ -22,7 +22,8 @@ export default function TodoList() {
       }
     }
   `, {
-    fetchPolicy: 'network-only'
+    // Properly normalized so we do not need it
+    // fetchPolicy: 'network-only'
   });
 
   console.log('data', data);

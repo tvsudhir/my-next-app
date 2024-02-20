@@ -16,8 +16,9 @@ type Todo = {
 
 export default function TodoList() {
   const { loading, error, data = { listToDos: [] } } = useQuery(LIST_TODOS, {
-    // Properly normalized so we do not need it
-    // fetchPolicy: 'network-only'
+    // If we Create a new ToDo then it won't be visible.
+    // We either manually update the cache in createToDo (not eligant) Or fetch fresh list on render
+    fetchPolicy: 'network-only'
   });
 
   console.log('data', data);

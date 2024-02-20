@@ -12,6 +12,16 @@ type InputForm = {
   text: string
 };
 
+const CREATE_TODO = gql`
+  mutation test_createToDo($todo: ToDoCreateInput) {
+    createToDo(todo: $todo) {
+      todoId
+      name
+      text
+    }
+  }
+`;
+
 export default function CreateToDo() {
   const {
     register,
@@ -21,15 +31,7 @@ export default function CreateToDo() {
 
   const router = useRouter();
 
-  const [createTodo, { data: createdTodo, loading, error }] = useMutation(gql`
-    mutation test_createToDo($todo: ToDoCreateInput) {
-      createToDo(todo: $todo) {
-        todoId
-        name
-        text
-      }
-    }
-  `);
+  const [createTodo, { data: createdTodo, loading, error }] = useMutation(CREATE_TODO);
 
   const onSubmit = async (formData: InputForm) => {
     console.log('formData', formData);

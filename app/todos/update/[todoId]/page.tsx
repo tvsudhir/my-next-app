@@ -18,18 +18,30 @@ type InputForm = {
   text: string
 };
 
+const GET_TODO = gql`
+  query GetToDo($todoId: ID!) {
+    getToDo(todoId: $todoId) {
+      todoId
+      name
+      text 
+    }
+  }
+`;
+
+const UPDATE_TODO = gql`
+  mutation UpdateTodo($todo: ToDoUpdateInput) {
+    updateToDo (todo: $todo) {
+      todoId
+      name
+      text    
+    }
+  }
+`;
+
 export default function updateTodo({ params }: PageParams) {
   const { todoId } = params;
   const router = useRouter();
-  const { data = { getTodo: {} } } = useQuery(gql`
-    query GetToDo($todoId: ID!) {
-      getToDo(todoId: $todoId) {
-        todoId
-        name
-        text 
-      }
-    }
-  `, {
+  const { data = { getTodo: {} } } = useQuery(GET_TODO, {
     variables: { todoId },
     // Properly normalized so we do not need it
     // fetchPolicy: 'network-only'
@@ -38,15 +50,7 @@ export default function updateTodo({ params }: PageParams) {
   const receivedTodo = data.getToDo ?? {};
   console.log('receivedTodo', receivedTodo);
 
-  const [updateTodo, { data: updatedTodo, loading, error }] = useMutation(gql`
-    mutation UpdateTodo($todo: ToDoUpdateInput) {
-      updateToDo (todo: $todo) {
-        todoId
-        name
-        text    
-      }
-    }
-  `);
+  const [updateTodo, { data: updatedTodo, loading, error }] = useMutation(UPDATE_TODO);
 
   const onSubmit = async (formData: InputForm) => {
     console.log('formData', formData, todoId);

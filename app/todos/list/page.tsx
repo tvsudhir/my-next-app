@@ -12,16 +12,18 @@ type Todo = {
   text: string,
 };
 
-export default function TodoList() {
-  const { loading, error, data = { listToDos: [] } } = useQuery(gql`
-    query ListToDos {
-      listToDos {
-        todoId
-        name
-        text
-      }
+const LIST_TODOS = gql`
+  query ListToDos {
+    listToDos {
+      todoId
+      name
+      text
     }
-  `, {
+  }
+`;
+
+export default function TodoList() {
+  const { loading, error, data = { listToDos: [] } } = useQuery(LIST_TODOS, {
     // Properly normalized so we do not need it
     // fetchPolicy: 'network-only'
   });

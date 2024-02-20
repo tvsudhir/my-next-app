@@ -1,0 +1,16 @@
+.main {
+  max-width: 500px;
+  display: grid;
+  grid-template-columns: 50px auto;
+  grid-template-rows: 1fr 2fr 3fr 2fr;
+  grid-row-gap: 10px;
+  grid-column-gap: 20px;
+}
+
+.submitButton {
+  grid-column: 1 / span 2;
+}
+
+.title {
+  grid-column: 1 / span 2;
+}

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { useQuery, gql } from '@apollo/client';
 
 import styles from './list.module.css';
@@ -20,7 +21,9 @@ export default function TodoList() {
         text
       }
     }
-  `);
+  `, {
+    fetchPolicy: 'network-only'
+  });
 
   console.log('data', data);
   const todos = data.listToDos;
@@ -28,7 +31,7 @@ export default function TodoList() {
   function renderTodo({ todoId, name, text }: Todo) {
     return (
       <div key={todoId} className={styles.singleTodo}>
-        <div>{name}</div>
+        <Link href={`/todos/update/${todoId}`}>{name}</Link>
         <div>{text}</div>
       </div>
     );

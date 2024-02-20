@@ -4,6 +4,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useMutation, gql } from '@apollo/client';
+import SomethingIsWrong from '@/components/SomethingIsWrong';
 import CREATE_TODO from './createToDo.gql';
 
 import styles from './createTodo.module.css';
@@ -12,7 +13,6 @@ type InputForm = {
   name: string
   text: string
 };
-
 
 export default function CreateToDo() {
   const {
@@ -26,13 +26,18 @@ export default function CreateToDo() {
   const [createTodo, { data: createdTodo, loading, error }] = useMutation(CREATE_TODO);
 
   const onSubmit = async (formData: InputForm) => {
-    console.log('formData', formData);
-    await createTodo({ variables: { todo: formData } });
-
-    router.push('/todos/list');
+    try {
+      await createTodo({ variables: { todo: formData } });
+      router.push('/todos/list');
+    } catch (err) {
+      console.log('*** ERROR - Fire Sentry Error', err);
+    }
   }
 
-  console.log('formState', formState);
+  if (error) {
+    return <SomethingIsWrong />
+  }
+
   return (
     <form className={styles.main} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.title}>Create ToDo</div>

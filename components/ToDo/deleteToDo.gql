@@ -1,0 +1,6 @@
+mutation DeleteToDo($todoId: ID!) {
+  deleteToDo (todoId: $todoId) {
+    status
+    err
+  }
+}

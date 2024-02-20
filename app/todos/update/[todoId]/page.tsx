@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useQuery, useMutation, gql } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import GET_TODO from './getToDo.gql';

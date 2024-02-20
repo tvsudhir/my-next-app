@@ -1,0 +1,7 @@
+mutation UpdateTodo($todo: ToDoUpdateInput) {
+  updateToDo (todo: $todo) {
+    todoId
+    name
+    text    
+  }
+}

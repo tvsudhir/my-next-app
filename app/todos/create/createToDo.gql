@@ -1,0 +1,7 @@
+mutation test_createToDo($todo: ToDoCreateInput) {
+  createToDo(todo: $todo) {
+    todoId
+    name
+    text
+  }
+}

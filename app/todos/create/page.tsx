@@ -4,6 +4,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useMutation, gql } from '@apollo/client';
+import CREATE_TODO from './createToDo.gql';
 
 import styles from './createTodo.module.css';
 
@@ -12,15 +13,6 @@ type InputForm = {
   text: string
 };
 
-const CREATE_TODO = gql`
-  mutation test_createToDo($todo: ToDoCreateInput) {
-    createToDo(todo: $todo) {
-      todoId
-      name
-      text
-    }
-  }
-`;
 
 export default function CreateToDo() {
   const {

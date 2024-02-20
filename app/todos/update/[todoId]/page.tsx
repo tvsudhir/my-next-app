@@ -4,6 +4,8 @@ import React from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import GET_TODO from './getToDo.gql';
+import UPDATE_TODO from './updateToDo.gql';
 
 import styles from './updateTodo.module.css';
 
@@ -17,26 +19,6 @@ type InputForm = {
   name: string
   text: string
 };
-
-const GET_TODO = gql`
-  query GetToDo($todoId: ID!) {
-    getToDo(todoId: $todoId) {
-      todoId
-      name
-      text 
-    }
-  }
-`;
-
-const UPDATE_TODO = gql`
-  mutation UpdateTodo($todo: ToDoUpdateInput) {
-    updateToDo (todo: $todo) {
-      todoId
-      name
-      text    
-    }
-  }
-`;
 
 export default function updateTodo({ params }: PageParams) {
   const { todoId } = params;

@@ -1,0 +1,7 @@
+query ListToDos {
+  listToDos {
+    todoId
+    name
+    text
+  }
+}

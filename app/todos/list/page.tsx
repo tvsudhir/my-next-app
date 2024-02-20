@@ -3,6 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { useQuery, gql } from '@apollo/client';
+import LIST_TODOS from './listToDo.gql';
+
 
 import styles from './list.module.css';
 
@@ -11,16 +13,6 @@ type Todo = {
   name: string,
   text: string,
 };
-
-const LIST_TODOS = gql`
-  query ListToDos {
-    listToDos {
-      todoId
-      name
-      text
-    }
-  }
-`;
 
 export default function TodoList() {
   const { loading, error, data = { listToDos: [] } } = useQuery(LIST_TODOS, {
